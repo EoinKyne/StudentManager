@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 Using hashmap to cache students
  */
 
+
 @Repository
 public class StudentRepository {
 
@@ -29,9 +30,9 @@ public class StudentRepository {
     }
 
     public boolean saveStudent(Student student){
-        log.info("Saving student {} to the repo " + student);
         if(!repo.containsKey(student.getStudentId()) && student.checkStudentName(student)){
             repo.put(student.getStudentId(), student);
+            log.info("Saving student studentId {} to the repo ", student.getStudentId());
             return true;
         }
         log.warn("Student Id exists, failed to student to repository ", student.getStudentFullName(), student.getStudentId());
@@ -57,7 +58,7 @@ public class StudentRepository {
     }
 
     public Student retrieveStudentFromRepo(long studentId){
-        log.info("Retrieve student from repo ", studentId);
+        log.info("Retrieve student studentId {} from repo ", studentId);
         student = repo.get(studentId);
         return student;
     }
@@ -65,7 +66,7 @@ public class StudentRepository {
     public List<Student> getAllStudents(){
         log.info("Get all students");
         List allStudents = new ArrayList<>();
-        for(Student student : this.repo.values()){
+        for(Student student : repo.values()){
             allStudents.add(student);
         }
         allStudents.sort(Comparator.comparingDouble(Student::getGradePointAverage).reversed());

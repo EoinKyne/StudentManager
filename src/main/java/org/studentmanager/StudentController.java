@@ -37,6 +37,7 @@ public class StudentController {
     public Student addStudent(@RequestBody Student student ){
         log.debug("Adding student {} to repository ", student);
         if(student.getGradePointAverage() < 0.0 || student.getGradePointAverage() > 4.0){
+            log.error("Grade point average entered {} is out of range. " , student.getGradePointAverage());
             throw new StudentGradePointAverageOutOfBoundsException(student.getGradePointAverage());
         }
 
@@ -70,9 +71,10 @@ public class StudentController {
         log.debug("Returning student studentId {} ", studentId);
         Student returnedStudent = studentRepository.retrieveStudentFromRepo(studentId);
         if(returnedStudent == null){
+            log.error("Student studentId {} is not found. ", studentId);
             throw new StudentNotFoundException(studentId);
         }else{
-            log.info("Return student by student id {} ", studentId,  returnedStudent);
+            log.info("Return student by student id {} ", studentId);
             return returnedStudent;
         }
     }
@@ -83,18 +85,21 @@ public class StudentController {
         Student amendedStudent = studentRepository.retrieveStudentFromRepo(studentId);
 
         if(amendedStudent == null){
+            log.error("Student studentId {} is not found. ", studentId);
             throw new StudentNotFoundException(studentId);
         }
         if(amendedStudent.isGradePointAverageChecked()){
+            log.error("Student is marked finalized and grade point average cannot be amended. ");
             throw new StudentAmendException(studentId);
         }
         if(gradePointAverage < 0.0 || gradePointAverage > 4.0){
+            log.error("Grade point average entered {} is out of range. " , gradePointAverage);
             throw new StudentGradePointAverageOutOfBoundsException(gradePointAverage);
         }
         amendedStudent = studentRepository.amendGradePointAverage(studentId, gradePointAverage);
         amendedStudent = addStudentGradePointAverageLabel(amendedStudent);
 
-        log.debug("Updated GPA {} for student {} ", gradePointAverage, amendedStudent);
+        log.info("Updated GPA {} for student {} ", gradePointAverage, amendedStudent.getStudentId());
         return amendedStudent;
     }
 
@@ -102,16 +107,17 @@ public class StudentController {
     public Student finalizeGradePointAverageByStudent(@PathVariable("id") long studentId){
         log.debug("Setting student studentId {} to grade point average finalized ", studentId);
         Student finalizedStudent = studentRepository.retrieveStudentFromRepo(studentId);
-        log.debug("finalized student from repo {} ", finalizedStudent);
         if(finalizedStudent == null){
+            log.error("Student studentId {} is not found. ", studentId);
             throw new StudentNotFoundException(studentId);
         }
         if(finalizedStudent.isGradePointAverageChecked()){
+            log.error("Student is marked finalized and grade point average cannot be amended. ");
             throw new StudentNotFoundException(studentId);
         }
-        log.debug("finalized student from repo after checks {} ", finalizedStudent);
+
         finalizedStudent = studentRepository.finalizeGradePointAverage(studentId);
-        log.debug("finalized student from finalizeGPA {} ", finalizedStudent);
+        log.info("Finalized student from finalizeGPA {} ", finalizedStudent.getStudentId());
         return finalizedStudent;
     }
 }
