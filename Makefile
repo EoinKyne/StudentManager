@@ -2,8 +2,8 @@
 .PHONY: run_studentmanager stop_studentmanager install_kind create_kind_cluster create_docker_registry \
 connect_registry_to_kind_network connect_registry_to_kind delete_kind_cluster delete_docker_registry \
 create_kind_cluster_with_registry delete_kind_cluster_with_registry install_app check_if_registry_exists \
-install_kubectl push_app_to_registry install_ingress_nginx
-
+install_kubectl push_app_to_registry install_ingress_nginx check_docker_registry_exists
+ 
 run_studentmanager:
 	docker build -t studentmanager:1.0.1  . && \
 		docker run -itd -p 8080:8080 --name studentmanager --rm studentmanager:1.0.1
