@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 Using hashmap to cache students
  */
 
-
 @Repository
 public class StudentRepository {
 
@@ -41,7 +40,6 @@ public class StudentRepository {
 
     public Student addStudentGradePointAverageLabel(Student student){
         log.debug("Generating GPA label for grade point average provided for student {} ", student);
-        double testGpa = student.getGradePointAverage();
         StudentGradeLabel studentGradeLabel1 = new StudentGradeLabel();
         student = studentGradeLabel1.getLabelStrings(student);
         return student;

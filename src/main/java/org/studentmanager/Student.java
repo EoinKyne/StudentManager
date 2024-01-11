@@ -36,6 +36,14 @@ public class Student {
         this.gradePointAverage = gradePointAverage;
     }
 
+    public Student(String studentFullName, double gradePointAverage, String gradePointAverageLabel, boolean gradePointAverageChecked) {
+        super();
+        this.studentFullName = studentFullName;
+        this.gradePointAverage = gradePointAverage;
+        this.gradePointAverageLabel = gradePointAverageLabel;
+        this.gradePointAverageChecked = gradePointAverageChecked;
+    }
+
     public Student(long studentId, String studentFullName, double gradePointAverage, String gradePointAverageLabel, boolean gradePointAverageChecked) {
         super();
         this.studentId = studentId;
@@ -44,6 +52,7 @@ public class Student {
         this.gradePointAverageLabel = gradePointAverageLabel;
         this.gradePointAverageChecked = gradePointAverageChecked;
     }
+
 
     public long getStudentId() {
         return studentId;
