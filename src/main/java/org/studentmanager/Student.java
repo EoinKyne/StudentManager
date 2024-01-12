@@ -1,5 +1,6 @@
 package org.studentmanager;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class Student {
 
     private static final Logger log = LogManager.getLogger(Student.class);
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long studentId;
     private String studentFullName;
     private double gradePointAverage;
