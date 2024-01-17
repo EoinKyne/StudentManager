@@ -11,6 +11,7 @@ import java.util.List;
 /*
 Rest Controller Layer
  */
+
 @RestController
 public class StudentController {
 
@@ -41,7 +42,7 @@ public class StudentController {
     @GetMapping("/students/getall")
     public List<Student> getAllStudents(){
         log.debug("Getting all students.....");
-        return studentService.getAllStudents();
+        return studentService.returnAllStudents();
     }
 
     @GetMapping("/student/{id}")

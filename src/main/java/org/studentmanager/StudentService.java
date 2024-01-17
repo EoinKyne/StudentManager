@@ -1,6 +1,5 @@
 package org.studentmanager;
 
-
 import org.springframework.stereotype.Service;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,14 +14,14 @@ public class StudentService {
 
     private StudentRepository studentRepository = new StudentRepository();
 
-    public StudentService() {
-    }
-
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudents() {
+    public StudentService() {
+    }
+
+    public List<Student> returnAllStudents() {
         log.debug("Called student service class to call student repo");
         return studentRepository.getAllStudents();
     }
@@ -54,7 +53,6 @@ public class StudentService {
         student = studentRepository.addStudentGradePointAverageLabel(student);
         return student;
     }
-
 
     private Student getGeneratedStudentId(Student student){
         log.debug("Generating the next student Id for student {}", student);
@@ -98,9 +96,8 @@ public class StudentService {
         return amendedStudent;
     }
 
-
     public Student finalizeStudentGPA(long studentId) {
-        log.debug("Finalize GPA and marking student immutablt for student id {}");
+        log.debug("Finalize GPA and marking student complete for student id {}", studentId);
         Student finalizedStudent = studentRepository.retrieveStudentFromRepo(studentId);
         if(finalizedStudent == null){
             log.error("Student studentId {} is not found. ", studentId);

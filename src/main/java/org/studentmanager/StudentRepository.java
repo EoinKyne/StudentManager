@@ -19,12 +19,11 @@ public class StudentRepository {
     private long nextStudentId;
     private Student student;
 
-
     public StudentRepository(){
 
     }
 
-    public StudentRepository(Map repo){
+    public StudentRepository(Map<Long, Student> repo){
         this.repo = repo;
     }
 
@@ -34,7 +33,7 @@ public class StudentRepository {
             log.info("Saving student studentId {} to the repo ", student.getStudentId());
             return true;
         }
-        log.warn("Student Id exists, failed to student to repository ", student.getStudentFullName(), student.getStudentId());
+        log.warn("Student Id {} exists, failed to add student {} to repository ", student.getStudentFullName(), student.getStudentId());
         return false;
     }
 
@@ -63,7 +62,7 @@ public class StudentRepository {
 
     public List<Student> getAllStudents(){
         log.info("Get all students");
-        List allStudents = new ArrayList<>();
+        List<Student> allStudents = new ArrayList<>();
         for(Student student : repo.values()){
             allStudents.add(student);
         }

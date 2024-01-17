@@ -14,7 +14,7 @@ public enum StudentGradePointAverageScale {
     GRADE_POINT_AVERAGE_LETTER_1_0("D"),
     GRADE_POINT_AVERAGE_LETTER_0_0("F");
 
-    public String gradeLabel;
+    public final String gradeLabel;
 
     StudentGradePointAverageScale(String gradeLabel){
         this.gradeLabel = gradeLabel;

@@ -14,6 +14,7 @@ public class Student {
     private String studentFullName;
     private double gradePointAverage;
     private boolean gradePointAverageChecked;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String gradePointAverageLabel;
 
 
