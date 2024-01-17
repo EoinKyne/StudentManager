@@ -9,7 +9,7 @@ class StudentAmendExceptionAdviceTest {
     void studentAmendExceptionAdvice() {
         StudentAmendExceptionAdvice studentAmendExceptionAdvice = new StudentAmendExceptionAdvice();
         StudentAmendException studentAmendException = new StudentAmendException(1L);
-        String message = studentAmendExceptionAdvice.StudentAmendExceptionAdvice(studentAmendException);
+        String message = studentAmendExceptionAdvice.studentAmendExceptionHandler(studentAmendException);
         Assertions.assertFalse(message.isEmpty());
     }
 }

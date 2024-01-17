@@ -9,7 +9,9 @@ class StudentNameIsEmptyExceptionTest {
     @Test
     public void testStudentNameIsEmptyException(){
         Student student = new Student(1L, " ");
+
         StudentNameIsEmptyException studentNameIsEmptyException = new StudentNameIsEmptyException(student);
+
         assertNotNull(studentNameIsEmptyException);
     }
 

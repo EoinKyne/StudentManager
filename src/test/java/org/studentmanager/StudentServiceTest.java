@@ -16,8 +16,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
-    //private Map<Long, Student> repository;
-
     @Mock
     private StudentRepository studentRepository;
 
@@ -25,25 +23,20 @@ class StudentServiceTest {
     @BeforeEach
     public void setUp(){
         studentService = new StudentService(studentRepository);
-        //repository = new HashMap<>();
-        //studentRepository = new StudentRepository(repository);
     }
 
     @Test
     public void getAllStudents() {
-        // when
         studentService.returnAllStudents();
-        // then
         verify(studentRepository).getAllStudents();
     }
 
     @Test
     public void addNewStudent() {
-        // given
         Student s = new Student( 1L, "John Doe", 3.3, "C", false);
-        // when
+
         studentService.addNewStudent(s);
-        // then
+
         ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
         verify(studentRepository).saveStudent(studentArgumentCaptor.capture());
         Student capturedStudent = studentArgumentCaptor.getValue();
@@ -52,7 +45,6 @@ class StudentServiceTest {
 
     @Test
     public void addNewStudentGpaOutOfRange(){
-        // given
         Student s = new Student( 1L, "John Doe", 4.3, "", false);
 
         StudentGradePointAverageOutOfBoundsException studentGradePointAverageOutOfBoundsException =
@@ -68,7 +60,9 @@ class StudentServiceTest {
     public void getStudentById(){
         Student s = new Student(1L, "John Doe", 3.3,"C", false );
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(s);
+
         studentService.addNewStudent(s);
+
         Student returnedStudent = studentService.getStudentById(1L);
         Assertions.assertEquals(returnedStudent, s);
     }
@@ -79,7 +73,9 @@ class StudentServiceTest {
         given(studentRepository.amendGradePointAverage(anyLong(), anyDouble())).willReturn(amendedStudent);
         given(studentRepository.addStudentGradePointAverageLabel(amendedStudent)).willReturn(amendedStudent);
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(amendedStudent);
+
         studentService.amendGPAForStudentId(1L, 3.3);
+
         verify(studentRepository).retrieveStudentFromRepo(1L);
     }
 
@@ -90,7 +86,7 @@ class StudentServiceTest {
         StudentNotFoundException studentNotFoundException = Assertions.assertThrows(StudentNotFoundException.class, () -> {
             studentService.amendGPAForStudentId(1L, 3.3);
         }, "StudentNotFoundException exception was expected");
-        Assertions.assertEquals("StudentId is not found 1", studentNotFoundException.getMessage());
+        Assertions.assertEquals("StudentId is not found id=1", studentNotFoundException.getMessage());
         verify(studentRepository, never()).amendGradePointAverage(anyLong(), anyDouble());
     }
 
@@ -99,28 +95,25 @@ class StudentServiceTest {
         StudentNotFoundException studentNotFoundException = Assertions.assertThrows(StudentNotFoundException.class, () -> {
             studentService.getStudentById(1L);
         }, "StudentNotFoundException exception was expected");
-        Assertions.assertEquals("StudentId is not found 1", studentNotFoundException.getMessage());
+        Assertions.assertEquals("StudentId is not found id=1", studentNotFoundException.getMessage());
         verify(studentRepository, never()).amendGradePointAverage(1L, 3.3);
     }
 
     @Test
     public void testStudentAmendException(){
         Student finalStudent = new Student(1L, "Jane Doe", 2.0, "C", true);
-
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(finalStudent);
 
         StudentAmendException studentAmendException = Assertions.assertThrows(StudentAmendException.class, () -> {
             studentService.amendGPAForStudentId(1L, 2.0);
         }, "StudentAmendException exception was expected");
         Assertions.assertEquals("Student GPA is finalized and cannot be amended for student studentId 1", studentAmendException.getMessage());
-
         verify(studentRepository, never()).amendGradePointAverage(1L, 2.0);
     }
 
     @Test
     public void testStudentGpaIsOutOfBoundsException(){
         Student finalStudent = new Student(1L, "Jane Doe", 2.0, "C", false);
-
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(finalStudent);
 
         StudentGradePointAverageOutOfBoundsException studentGradePointAverageOutOfBoundsException =
@@ -137,7 +130,9 @@ class StudentServiceTest {
         Student s = new Student( 1L, "John Doe", 3.3, "C", false);
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(s);
         given(studentRepository.finalizeGradePointAverage(anyLong())).willReturn(s);
+
         studentService.finalizeStudentGPA(s.getStudentId());
+
         verify(studentRepository).retrieveStudentFromRepo(1L);
         verify(studentRepository).finalizeGradePointAverage(1L);
     }
@@ -145,10 +140,11 @@ class StudentServiceTest {
     @Test
     public void testFinalizeGpaWhenStudentIsNotInMap(){
         Student finalizedStudent = new Student(1L, "Jane Doe", 3.3, "C", false);
+
         StudentNotFoundException studentNotFoundException = Assertions.assertThrows(StudentNotFoundException.class, () -> {
             studentService.finalizeStudentGPA(1L);
         }, "StudentNotFoundException exception was expected");
-        Assertions.assertEquals("StudentId is not found 1", studentNotFoundException.getMessage());
+        Assertions.assertEquals("StudentId is not found id=1", studentNotFoundException.getMessage());
         verify(studentRepository, never()).finalizeGradePointAverage(anyLong());
     }
 
@@ -156,6 +152,7 @@ class StudentServiceTest {
     public void testFinalizedGpaWhenStudentFinalizedIsTrueAmendException(){
         Student finalizedStudent = new Student(1L, "Jane Doe", 3.3, "C", true);
         given(studentRepository.retrieveStudentFromRepo(anyLong())).willReturn(finalizedStudent);
+
         StudentAmendException studentAmendException = Assertions.assertThrows(StudentAmendException.class, () -> {
             studentService.finalizeStudentGPA(1L);
         }, "StudentAmendException exception was expected");

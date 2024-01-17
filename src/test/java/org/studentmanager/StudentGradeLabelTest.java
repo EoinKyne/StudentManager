@@ -7,8 +7,6 @@ class StudentGradeLabelTest {
 
     private StudentGradeLabel studentGradeLabel = new StudentGradeLabel();
 
-
-
     @Test
     void getlabelStrings() {
         Student student = new Student(1L, "John Doe", 2.5);

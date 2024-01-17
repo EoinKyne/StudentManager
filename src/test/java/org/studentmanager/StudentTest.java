@@ -24,17 +24,18 @@ public class StudentTest {
         StudentNameIsEmptyException studentNameIsEmptyException = Assertions.assertThrows(StudentNameIsEmptyException.class, () -> {
             student.checkStudentName(student);
         }, "StudentNameIsEmptyException exception is expected");
-        Assertions.assertEquals("Cannot add new student without a full name", studentNameIsEmptyException.getMessage());
+        Assertions.assertEquals("Cannot add new student without a full name Student{studentId=1, studentFullName='', gradePointAverage=3.3, gradePointAverageLabel=null, gradePointAverageChecked=false}",
+                studentNameIsEmptyException.getMessage());
     }
 
     @Test
     public void testAddGradePointAverage(){
         Student student2 = new Student(2L, "Jane Doe", 3.1);
+
         studentList.add(student);
         studentList.add(student2);
 
         Assertions.assertEquals(3.1, studentList.get(1).getGradePointAverage());
         Assertions.assertEquals(3.3, studentList.get(0).getGradePointAverage());
-
     }
 }
