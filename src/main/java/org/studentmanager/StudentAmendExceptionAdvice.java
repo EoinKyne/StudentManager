@@ -12,7 +12,7 @@ public class StudentAmendExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(StudentAmendException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String StudentAmendExceptionAdvice(StudentAmendException exception){
+    public String studentAmendExceptionHandler(StudentAmendException exception){
         return exception.getMessage();
     }
 }
