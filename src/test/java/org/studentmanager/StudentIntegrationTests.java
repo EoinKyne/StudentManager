@@ -34,7 +34,7 @@ public class StudentIntegrationTests {
 
     @BeforeEach
     public void setUp(){
-        studentController = new StudentController(studentRepository, studentService);
+        studentController = new StudentController(studentService);
         this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
@@ -155,7 +155,7 @@ public class StudentIntegrationTests {
 
     @Test
     public void studentAmendExceptionWhenStudentIsMarkedFinalized(){
-        student = new Student("Jane Doe", 3.9, "A-", true );
+        student = new Student(1L,"Jane Doe", 3.9, "A-", true );
         student = studentController.addStudent(student);
 
         StudentAmendException studentAmendException = Assertions.assertThrows(StudentAmendException.class, () -> {

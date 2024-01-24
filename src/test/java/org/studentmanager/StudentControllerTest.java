@@ -33,7 +33,7 @@ public class StudentControllerTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.openMocks(this);
-        studentController = new StudentController(studentRepository, studentService);
+        studentController = new StudentController(studentService);
     }
 
     @Test
