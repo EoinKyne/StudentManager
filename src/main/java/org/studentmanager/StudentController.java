@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class StudentController {
 
     private static final Logger log = LogManager.getLogger(StudentController.class);
 
-    @Autowired
-    private StudentRepository studentRepository;
+    //@Autowired
+    //private StudentRepository studentRepository;
 
     @Autowired
     private StudentService studentService;
@@ -27,8 +28,8 @@ public class StudentController {
 
     }
 
-    public StudentController(StudentRepository studentRepository, StudentService studentService){
-        this.studentRepository = studentRepository;
+    public StudentController(StudentService studentService){
+        //this.studentRepository = studentRepository;
         this.studentService = studentService;
     }
 
@@ -39,14 +40,14 @@ public class StudentController {
         return newStudent;
     }
 
-    @GetMapping("/students/getall")
+     @GetMapping("/students/getall")
     public List<Student> getAllStudents(){
         log.debug("Getting all students.....");
         return studentService.returnAllStudents();
     }
 
     @GetMapping("/student/{id}")
-    public Student getStudentById(@PathVariable("id") long studentId){
+    public Student getStudentById(@NonNull @PathVariable("id") long studentId){
         log.debug("Returning student studentId {} ", studentId);
         Student returnedStudent = studentService.getStudentById(studentId);
         return returnedStudent;

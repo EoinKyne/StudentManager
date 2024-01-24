@@ -3,9 +3,11 @@ package org.studentmanager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 // Student Model
 
+@Component
 public class Student {
 
     private static final Logger log = LogManager.getLogger(Student.class);
@@ -17,11 +19,7 @@ public class Student {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String gradePointAverageLabel;
 
-
-    public Student(){
-
-    }
-
+    public Student(){}
     public Student(long studentId, String studentFullName){
         this.studentId = studentId;
         this.studentFullName = studentFullName;
@@ -39,13 +37,13 @@ public class Student {
         this.gradePointAverage = gradePointAverage;
     }
 
-    public Student(String studentFullName, double gradePointAverage, String gradePointAverageLabel, boolean gradePointAverageChecked) {
+    /*public Student(String studentFullName, double gradePointAverage, String gradePointAverageLabel, boolean gradePointAverageChecked) {
         super();
         this.studentFullName = studentFullName;
         this.gradePointAverage = gradePointAverage;
         this.gradePointAverageLabel = gradePointAverageLabel;
         this.gradePointAverageChecked = gradePointAverageChecked;
-    }
+    } */
 
     public Student(long studentId, String studentFullName, double gradePointAverage, String gradePointAverageLabel, boolean gradePointAverageChecked) {
         super();
